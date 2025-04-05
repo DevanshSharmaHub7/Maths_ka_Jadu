@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maths Ka Jadu</title>
+  <link rel="shortcut icon" href="./MathsKaJadu.png" type="image/x-icon">
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #ffcc00;
+    }
+    .equation-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .equation {
+      background: #222;
+      padding: 15px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 600px;
+    }
+    a {
+      color: #ff66ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Maths Ka Jadu ✨</h1>
+  <p>Explore amazing mathematical curves and equations!</p> 
+  
+  <div class="equation-list">
+    <div class="equation">
+      <h2>Heart Curve</h2>
+      <p>y = |x|<sup>2/3</sup> + 0.9 · sin(kx) · (3 - x²)<sup>1/2</sup></p>
+      <a href="heart.html">View Graph</a>
+    </div>
+    
+    <div class="equation">
+      <h2>Butterfly Curve</h2>
+      <p>x = sin(t) * (e<sup>cos(t)</sup> - 2cos(4t) - sin(t/12)<sup>5</sup>)<br>
+         y = cos(t) * (e<sup>cos(t)</sup> - 2cos(4t) - sin(t/12)<sup>5</sup>)</p>
+      <a href="butterfly-equation.html">View Graph</a>
+    </div>
+    
+    <div class="equation">
+      <h2>Lemniscate</h2>
+      <p>(x² + y²)² = a²(x² - y²)</p>
+      <a href="lemniscate-equation.html">View Graph</a>
+    </div>
+  </div>
+</body>
+</html>

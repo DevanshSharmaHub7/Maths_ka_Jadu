@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Equation</title>
+    <link rel="shortcut icon" href="./PurpleHeart.jpg" type="image/x-icon">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: #111;
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h2 {
+            margin: 5px 0;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 80vh;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        input[type="range"] {
+            width: 200px;
+            max-width: 80vw;
+        }
+
+        canvas {
+            background: #222;
+            border-radius: 10px;
+            width: 60vw;
+            height: 75vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Heart Equation</h2>
+    <p><marquee><font size="4"><b>-Made by Devansh and Naman</b></font></marquee></p>
+    <div class="container">
+        <div class="controls">
+            <label for="kSlider">k:</label>
+            <input type="range" id="kSlider" min="0" max="100" step="0.1" value="0">
+            <span id="kValue">0.00</span>
+        </div>
+        <canvas id="graph" width="800" height="600"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("graph");
+        const ctx = canvas.getContext("2d");
+        const width = canvas.width;
+        const height = canvas.height;
+
+        const slider = document.getElementById("kSlider");
+        const kDisplay = document.getElementById("kValue");
+
+        const scale = 60;
+        const xMin = -5, xMax = 5;
+
+        function drawAxes() {
+            ctx.strokeStyle = "#555";
+            ctx.lineWidth = 1;
+
+            ctx.beginPath();
+            ctx.moveTo(0, height / 2);
+            ctx.lineTo(width, height / 2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(width / 2, 0);
+            ctx.lineTo(width / 2, height);
+            ctx.stroke();
+        }
+
+        function drawGraph(k) {
+            ctx.clearRect(0, 0, width, height);
+            drawAxes();
+
+            const gradient = ctx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, "#ff00ff");
+            gradient.addColorStop(1, "#800080");
+
+            const points = [];
+
+            for (let x = xMin; x <= xMax; x += 0.01) {
+                const absX = Math.abs(x);
+                const insideRoot = 3 - x * x;
+                if (insideRoot < 0) continue;
+
+                const y = Math.pow(absX, 2 / 3) + 0.9 * Math.sin(k * x) * Math.sqrt(insideRoot);
+
+                const px = width / 2 + x * scale;
+                const py = height / 2 - y * scale;
+                points.push({ px, py });
+            }
+
+            ctx.strokeStyle = "#ff66ff";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            points.forEach(({ px, py }, index) => {
+                if (index === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            });
+            ctx.stroke();
+
+            if (k !== 0) {
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                points.forEach(({ px, py }, index) => {
+                    if (index === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                });
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        slider.addEventListener("input", () => {
+            const k = parseFloat(slider.value);
+            kDisplay.textContent = k.toFixed(2);
+            drawGraph(k);
+        });
+
+        drawGraph(parseFloat(slider.value));
+    </script>
+
+</body>
+
+</html>
